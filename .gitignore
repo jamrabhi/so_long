@@ -1,3 +1,6 @@
+*.ber
+so_long
+
 # Prerequisites
 *.d
 

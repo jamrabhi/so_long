@@ -1,0 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/10 16:41:10 by jamrabhi          #+#    #+#             */
+/*   Updated: 2021/06/27 21:44:32 by jamrabhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <so_long.h>
+
+int	main(int argc, char **argv)
+{
+	t_data data;
+
+	if (argc != 2)
+	{
+		ft_putstr_fd("Usage : ./so_long map.ber\n", STDERR_FILENO);
+		exit (EXIT_FAILURE);
+	}
+	ft_bzero(&data, sizeof(data));
+	data.fd = open(argv[1], O_DIRECTORY);
+	if (data.fd != -1)
+		print_error("Map specified is a directory\n");
+	data.fd = open(argv[1], O_RDONLY);
+	if (data.fd == -1)
+		print_error("File doesn't exist\n");
+	parse_line(argv[1], &data);
+	return (0);
+}

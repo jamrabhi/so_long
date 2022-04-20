@@ -12,78 +12,75 @@
 
 #include <so_long.h>
 
-int	check_valid_map(char *str)
+// int	check_valid_map(char *str)
+// {
+// 	int	i;
+// 	int	wall_count;
+
+// 	i = 0;
+// 	wall_count = 0;
+// 	g_map.spawn_dir = 0;
+// 	while (str && str[i])
+// 	{
+// 		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
+// 			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
+// 					== 'W') && g_map.spawn_dir != 0))
+// 			return (0);
+// 		if (str[i] == '1')
+// 			wall_count++;
+// 		if (wall_count > 0 && str[i] == '\n' && str[i + 1] == '\n')
+// 			return (0);
+// 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
+// 			g_map.spawn_dir = str[i];
+// 		i++;
+// 	}
+// 	if (g_map.spawn_dir == 0)
+// 		return (0);
+// 	return (1);
+// }
+
+int	check_rectangle(char **map)
 {
-	int	i;
-	int	wall_count;
+	size_t i;
+	size_t x;
+	size_t y;
 
 	i = 0;
-	wall_count = 0;
-	g_map.spawn_dir = 0;
-	while (str && str[i])
-	{
-		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
-			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
-					== 'W') && g_map.spawn_dir != 0))
-			return (0);
-		if (str[i] == '1')
-			wall_count++;
-		if (wall_count > 0 && str[i] == '\n' && str[i + 1] == '\n')
-			return (0);
-		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
-			g_map.spawn_dir = str[i];
-		i++;
-	}
-	if (g_map.spawn_dir == 0)
-		return (0);
-	return (1);
-}
-
-int	check_first_line(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
+	x = ft_strlen(map[0]);
+	printf("x = %ld\n", x);
 	while (map[i])
 	{
-		while (map[i][j])
-		{
-			if (map[i][j] != '1' && map[i][j] != ' ')
-				return (0);
-			else if (map[i][j] == '1')
-			{
-				while (map[i][j] == '1' || map[i][j] == ' ')
-					j++;
-				if (map[i][j])
-					return (0);
-				return (1);
-			}
-			j++;
-		}
+		if (ft_strlen(map[i]) != x)
+			return (1);
 		i++;
 	}
+	y = i;
+	printf("y = %ld\n", y);
+	if (y == x || y == 1)
+		return (1);
 	return (0);
 }
 
-int	check_last_line(char **map)
+int	check_first_last_line(char **map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
+	j = -1;
+	if (!map[i])
+		return (1);
+	while (map[i][++j])
+		if (map[i][j] != '1')
+			return (1);
 	while (map[i])
 		i++;
 	i--;
-	while (map[i][j])
-	{
-		if (map[i][j] != '1' && map[i][j] != ' ')
-			return (0);
-		j++;
-	}
-	return (1);
+	j = -1;
+	while (map[i][++j])
+		if (map[i][j] != '1')
+			return (1);
+	return (0);
 }
 
 int	check_borders(char **map)

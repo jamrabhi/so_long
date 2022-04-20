@@ -22,13 +22,13 @@ void	check_ber(char *file_name)
 		print_error("Incorrect file format");
 }
 
-int	check_elements(void)
-{
-	if (g_map.no_path && g_map.so_path && g_map.ea_path && g_map.we_path
-		&& g_map.f[0] > -1 && g_map.c[0] > -1)
-		return (1);
-	return (0);
-}
+// int	check_elements(void)
+// {
+// 	if (g_map.no_path && g_map.so_path && g_map.ea_path && g_map.we_path
+// 		&& g_map.f[0] > -1 && g_map.c[0] > -1)
+// 		return (1);
+// 	return (0);
+// }
 
 // int	check_empty_line(char *str)
 // {
@@ -46,20 +46,19 @@ int	check_elements(void)
 
 void	parse_line(char *file_ber, t_data *data)
 {
-	char	*line;
-	int		ret;
+	// char	*line;
+	// int		ret;
 
-	ret = 1;
-	line = NULL;
-	printf("%s\n", file_ber);
+	// ret = 1;
+	// line = NULL;
 	check_ber(file_ber);
-	while (ret)
-	{
-		ret = get_next_line(data->fd, &line);
-		free(line);
-	}
+	// while (ret)
+	// {
+	// 	ret = get_next_line(data->fd, &line);
+	// 	free(line);
+	// }
 	// if (!check_elements())
 	// 	print_error("Missing element in the .cub file");
-	// parse_map(line);
-	close(data->fd);
+	parse_map(file_ber, data);
+	// close(data->fd);
 }

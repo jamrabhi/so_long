@@ -17,10 +17,7 @@ int	main(int argc, char **argv)
 	t_data data;
 
 	if (argc != 2)
-	{
-		ft_putstr_fd("Usage : ./so_long map.ber\n", STDERR_FILENO);
-		exit (EXIT_FAILURE);
-	}
+		print_error("Usage: ./so_long map.ber\n");
 	ft_bzero(&data, sizeof(data));
 	data.fd = open(argv[1], O_DIRECTORY);
 	if (data.fd != -1)
@@ -29,5 +26,6 @@ int	main(int argc, char **argv)
 	if (data.fd == -1)
 		print_error("File doesn't exist\n");
 	parse_line(argv[1], &data);
+	printf("OK !\n");
 	return (0);
 }

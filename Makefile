@@ -16,7 +16,9 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = src/main.c src/parsing/print_error.c src/parsing/parsing.c
+SRC = src/main.c src/parsing/print_error.c src/parsing/parsing.c \
+		src/parsing/parse_map.c src/get_next_line/get_next_line.c \
+		src/get_next_line/get_next_line_utils.c src/parsing/parse_map_utils.c
 
 OBJ = $(SRC:.c=.o)
 

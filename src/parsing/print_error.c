@@ -14,7 +14,7 @@
 
 int	print_error(char *error)
 {
-	ft_putstr_fd("Error : ", STDERR_FILENO);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd(error, STDERR_FILENO);
 	// free(g_map.no_path);
 	// free(g_map.so_path);
@@ -25,20 +25,20 @@ int	print_error(char *error)
 	exit (EXIT_FAILURE);
 }
 
-// void	free_array(char **str)
-// {
-// 	int	i;
+void	free_array(char **str)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		free(str[i]);
-// 		i++;
-// 	}
-// 	*str = NULL;
-// 	if (str)
-// 		free(str);
-// }
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	*str = NULL;
+	if (str)
+		free(str);
+}
 
 // int	free_array_and_return(char **array, int return_id)
 // {

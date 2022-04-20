@@ -17,6 +17,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include "../src/get_next_line/get_next_line.h"
 
 //A SUPPRIMER !!!!
 # include <stdio.h>
@@ -28,5 +29,10 @@ typedef struct s_data
 
 int		print_error(char *error);
 void	parse_line(char *file_ber, t_data *data);
+void	parse_map(char *line, t_data *data);
+void	free_array(char **str);
+int		check_first_last_line(char **map);
+int		check_rectangle(char **map);
+
 
 #endif

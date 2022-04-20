@@ -12,6 +12,18 @@
 
 #include <so_long.h>
 
+void	print_array(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		printf("line[%d]='%s'\n",i, str[i]);
+		i++;
+	}
+}
+
 int	empty_space(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -43,14 +55,14 @@ int	check_map(char **map)
 	return (1);
 }
 
-char	*get_array(char *line)
+char	*get_array(char *line, t_data *data)
 {
 	char	*str;
 	char	*tmp;
 	char	*tmp2;
 
 	str = ft_strdup("");
-	while (get_next_line(g_fd, &line))
+	while (get_next_line(data->fd, &line))
 	{
 		tmp = ft_strjoin(line, "\n");
 		tmp2 = ft_strjoin(str, tmp);
@@ -61,27 +73,37 @@ char	*get_array(char *line)
 		free(tmp2);
 	}
 	free(line);
-	close(g_fd);
+	close(data->fd);
 	return (str);
 }
 
-void	parse_map(char *line)
+void	parse_map(char *line, t_data *data)
 {
 	char	*map_str;
 	char	**map_array;
 
-	map_str = get_array(line);
-	if (!map_str)
-		print_error("invalid map");
+	map_str = get_array(line, data);
+	if (map_str[0] == '\0')
+	{
+		free(map_str);
+		print_error("Empty map\n");
+	}
 	map_array = ft_split(map_str, '\n');
-	if (!(check_valid_map(map_str) && check_first_line(map_array)
-			&& check_last_line(map_array) && check_borders(map_array)
-			&& check_map(map_array)))
+	print_array(map_array);
+	if (check_first_last_line(map_array) || check_rectangle(map_array))
 	{
 		free(map_str);
 		free_array(map_array);
-		print_error("Invalid map");
+		print_error("Invalid map\n");
 	}
+	// if (!(check_valid_map(map_str) && check_first_line(map_array)
+	// 		&& check_last_line(map_array) && check_borders(map_array)
+	// 		&& check_map(map_array)))
+	// {
+	// 	free(map_str);
+	// 	free_array(map_array);
+	// 	print_error("Invalid map");
+	// }
 	free(map_str);
 	free_array(map_array);
 }

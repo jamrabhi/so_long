@@ -25,6 +25,8 @@
 typedef struct s_data
 {
 	int	fd;
+	size_t	width;
+	size_t	height;
 }				t_data;
 
 int		print_error(char *error);
@@ -32,7 +34,9 @@ void	parse_line(char *file_ber, t_data *data);
 void	parse_map(char *line, t_data *data);
 void	free_array(char **str);
 int		check_first_last_line(char **map);
-int		check_rectangle(char **map);
+int		check_rectangle(char **map, t_data *data);
+int		check_borders(char **map, t_data *data);
+
 
 
 #endif

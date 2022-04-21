@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   Bheight: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/20 21:07:06 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/09/20 21:07:08 by jamrabhi         ###   ########.fr       */
+/*   Created: 2021/09/20 21:07:06 bheight jamrabhi          #+#    #+#             */
+/*   Updated: 2021/09/20 21:07:08 bheight jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,73 +39,47 @@
 // 	return (1);
 // }
 
-int	check_rectangle(char **map)
+int	check_rectangle(char **map, t_data *data)
 {
-	size_t i;
-	size_t x;
-	size_t y;
+	size_t width;
+	size_t height;
 
-	i = 0;
-	x = ft_strlen(map[0]);
-	printf("x = %ld\n", x);
-	while (map[i])
+	width = ft_strlen(map[0]);
+	height = 0;
+	printf("width = %ld\n", width);
+	while (map[height])
 	{
-		if (ft_strlen(map[i]) != x)
+		if (ft_strlen(map[height]) != width)
 			return (1);
-		i++;
+		height++;
 	}
-	y = i;
-	printf("y = %ld\n", y);
-	if (y == x || y == 1)
+	// printf("height = %ld\n", height);
+	if (height == width || height == 1)
 		return (1);
+	data->width = width;
+	data->height = height;
 	return (0);
 }
 
-int	check_first_last_line(char **map)
+int	check_borders(char **map, t_data *data)
 {
 	int	i;
-	int	j;
-
-	i = 0;
-	j = -1;
-	if (!map[i])
-		return (1);
-	while (map[i][++j])
-		if (map[i][j] != '1')
-			return (1);
-	while (map[i])
-		i++;
-	i--;
-	j = -1;
-	while (map[i][++j])
-		if (map[i][j] != '1')
-			return (1);
-	return (0);
-}
-
-int	check_borders(char **map)
-{
-	int	i;
-	int	j;
-	int	last_char;
+	int j;
 
 	i = 0;
 	j = 0;
-	last_char = (ft_strlen(map[i]) - 1);
+	while (map[i][j])
+	{
+		if (map[0][j] != '1' || map[data->height - 1][j] != '1')
+			return (1);
+		j++;
+	}
+	j = 0;
 	while (map[i])
 	{
-		j = 0;
-		last_char = (ft_strlen(map[i]) - 1);
-		if (map[i][j] == ' ' || map[i][last_char] == ' ')
-		{
-			while (map[i][j] && map[i][j] == ' ')
-				j++;
-			while (map[i][last_char] > 0 && map[i][last_char] == ' ')
-				last_char--;
-		}
-		if (map[i][j] != '1' || map[i][last_char] != '1')
-			return (0);
+		if (map[i][0] != '1' || map[i][data->width - 1] != '1')
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }

@@ -39,6 +39,37 @@
 // 	return (1);
 // }
 
+int	check_valid_char(char **map, t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (map[++i])
+	{
+		j = -1;
+		while(map[i][++j])
+		{
+			if (map[i][j] == 'C')
+				data->collectible++;
+			else if (map[i][j] == 'E')
+				data->map_exit++;
+			else if (map[i][j] == 'P')
+				data->player_start++;
+			else if (map[i][j] != '1' && map[i][j] != '0')
+				return (1);
+			j++;
+		}
+	}
+	if (data->collectible == 0 || data->map_exit == 0 || data->player_start
+		!= 1)
+	{
+		printf("KO");
+		return (1);
+	}
+	return (0);
+}
+
 int	check_rectangle(char **map, t_data *data)
 {
 	size_t width;

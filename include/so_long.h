@@ -24,9 +24,13 @@
 
 typedef struct s_data
 {
-	int	fd;
+	int		fd;
 	size_t	width;
 	size_t	height;
+	int		collectible;
+	int		map_exit;
+	int		player_start;
+
 }				t_data;
 
 int		print_error(char *error);
@@ -36,6 +40,7 @@ void	free_array(char **str);
 int		check_first_last_line(char **map);
 int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
+int		check_valid_char(char **map, t_data *data);
 
 
 

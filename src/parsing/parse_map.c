@@ -90,7 +90,8 @@ void	parse_map(char *line, t_data *data)
 	}
 	map_array = ft_split(map_str, '\n');
 	print_array(map_array);
-	if (check_rectangle(map_array, data) || check_borders(map_array, data))
+	if (check_rectangle(map_array, data) || check_borders(map_array, data) ||
+		check_valid_char(map_array, data))
 	{
 		free(map_str);
 		free_array(map_array);

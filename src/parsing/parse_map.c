@@ -12,58 +12,18 @@
 
 #include <so_long.h>
 
-void	print_array(char **str)
-{
-	int i;
-
-	i = 0;
-	while(str[i])
-	{
-		printf("line[%d]='%s'\n",i, str[i]);
-		i++;
-	}
-}
-
-int	empty_space(char c)
-{
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
-	return (0);
-}
-
-int	check_map(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (map[i])
-	{
-		while (map[i][j])
-		{
-			if ((map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' ||
-					map[i][j] == 'E' || map[i][j] == 'W') && (!(empty_space(map
-					[i][j + 1]) && empty_space(map[i - 1][j]) &&
-					empty_space(map[i + 1][j]))))
-				return (0);
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-	return (1);
-}
-
 char	*get_array(char *line, t_data *data)
 {
 	char	*str;
 	char	*tmp;
 	char	*tmp2;
+	int		ret;
 
 	str = ft_strdup("");
-	while (get_next_line(data->fd, &line))
+	ret = 1;
+	while (ret)
 	{
+		ret = get_next_line(data->fd, &line);
 		tmp = ft_strjoin(line, "\n");
 		tmp2 = ft_strjoin(str, tmp);
 		free(str);
@@ -72,39 +32,35 @@ char	*get_array(char *line, t_data *data)
 		free(tmp);
 		free(tmp2);
 	}
-	free(line);
 	close(data->fd);
 	return (str);
 }
 
-void	parse_map(char *line, t_data *data)
+void	check_ber(char *file_name)
+{
+	const char	*dot;
+
+	dot = NULL;
+	dot = ft_strrchr(file_name, '.');
+	if (!dot || ft_strncmp(dot, ".ber", 5) != 0 || !dot[-1] || dot[-1] == '/')
+		print_error("Incorrect file format\n");
+}
+
+void	parse_map(char *file_ber, t_data *data)
 {
 	char	*map_str;
 	char	**map_array;
 
-	map_str = get_array(line, data);
-	if (map_str[0] == '\0')
-	{
-		free(map_str);
-		print_error("Empty map\n");
-	}
+	check_ber(file_ber);
+	map_str = get_array(file_ber, data);
 	map_array = ft_split(map_str, '\n');
-	print_array(map_array);
-	if (check_rectangle(map_array, data) || check_borders(map_array, data) ||
-		check_valid_char(map_array, data))
+	if (!map_array[0] || check_rectangle(map_array, data)
+		|| check_borders(map_array, data) || check_valid_char(map_array, data))
 	{
 		free(map_str);
 		free_array(map_array);
 		print_error("Invalid map\n");
 	}
-	// if (!(check_valid_map(map_str) && check_first_line(map_array)
-	// 		&& check_last_line(map_array) && check_borders(map_array)
-	// 		&& check_map(map_array)))
-	// {
-	// 	free(map_str);
-	// 	free_array(map_array);
-	// 	print_error("Invalid map");
-	// }
 	free(map_str);
 	free_array(map_array);
 }

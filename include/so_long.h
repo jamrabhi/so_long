@@ -20,7 +20,7 @@
 # include "../src/get_next_line/get_next_line.h"
 
 //A SUPPRIMER !!!!
-# include <stdio.h>
+// # include <stdio.h>
 
 typedef struct s_data
 {
@@ -34,14 +34,12 @@ typedef struct s_data
 }				t_data;
 
 int		print_error(char *error);
-void	parse_line(char *file_ber, t_data *data);
 void	parse_map(char *line, t_data *data);
+void	check_ber(char *file_name);
 void	free_array(char **str);
 int		check_first_last_line(char **map);
 int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
 int		check_valid_char(char **map, t_data *data);
-
-
 
 #endif

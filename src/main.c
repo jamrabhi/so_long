@@ -35,5 +35,6 @@ int	main(int argc, char **argv)
 	printf("data->player_start = %d\n\n", data.player_start);
 	printf("OK !\n");
 	//END DEBUG
+	display();
 	return (0);
 }

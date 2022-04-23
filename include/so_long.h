@@ -18,9 +18,10 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "../src/get_next_line/get_next_line.h"
+# include <mlx.h>
 
 //A SUPPRIMER !!!!
-// # include <stdio.h>
+# include <stdio.h>
 
 typedef struct s_data
 {
@@ -33,6 +34,14 @@ typedef struct s_data
 
 }				t_data;
 
+typedef struct	s_mlx_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_mlx_data;
+
 int		print_error(char *error);
 void	parse_map(char *line, t_data *data);
 void	check_ber(char *file_name);
@@ -41,5 +50,6 @@ int		check_first_last_line(char **map);
 int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
 int		check_valid_char(char **map, t_data *data);
+void	display();
 
 #endif

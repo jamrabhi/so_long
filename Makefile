@@ -14,11 +14,11 @@ NAME = so_long
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 SRC = src/main.c src/parsing/print_error.c src/parsing/parse_map.c \
 	src/get_next_line/get_next_line.c src/get_next_line/get_next_line_utils.c \
-	src/parsing/parse_map_utils.c
+	src/parsing/parse_map_utils.c src/game/display.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -27,6 +27,10 @@ INCDIR = include
 LIBDIR = libft/
 
 LIB = libft/libft.a
+
+MLXDIR = minilibx-linux
+
+MLXFLAGS = -lmlx -lXext -lX11
 
 MAKEFLAGS += --no-print-directory
 
@@ -38,11 +42,11 @@ $(NAME) : $(OBJ)
 	@echo "DONE \n"
 
 	@echo "Compiling So Long ..."
-	@$(CC) $(CFLAGS) $(OBJ) -L $(LIBDIR) -lft -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -L$(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux $(MLXFLAGS) -o $(NAME)
 	@echo "DONE"
 
 .c.o:
-	@${CC} ${CFLAGS} -I $(INCDIR) -I$(LIBDIR) -c $< -o $@
+	@${CC} ${CFLAGS} -I$(INCDIR) -I$(LIBDIR) -I$(MLXDIR) -c $< -o $@
 
 clean:
 	@echo "Deleting Libft objects files ..."

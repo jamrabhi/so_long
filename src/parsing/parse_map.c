@@ -12,6 +12,19 @@
 
 #include <so_long.h>
 
+void	check_special_char(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] < 0)
+			print_error("Invalid map");
+		i++;
+	}
+}
+
 char	*get_array(char *line, t_data *data)
 {
 	char	*str;

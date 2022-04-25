@@ -31,6 +31,25 @@ static int	free_exit(char **str)
 	return (-1);
 }
 
+int	check_special_char(char *line, char **str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] <= 0)
+		{
+			free_array(&str[fd]);
+			free(line);
+			write(STDERR_FILENO, "Error\nInvalid map\n", 18);
+			return (-2);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static int	separate_lines(char **line, char **str, int fd)
 {
 	int		i;
@@ -40,6 +59,8 @@ static int	separate_lines(char **line, char **str, int fd)
 	while (str[fd][i] && str[fd][i] != '\n')
 		i++;
 	*line = ft_substr(str[fd], 0, i);
+	if (check_special_char(*line, str, fd) == -2)
+		return (-2);
 	if (!line)
 	{
 		free_array(&str[fd]);

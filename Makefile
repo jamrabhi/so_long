@@ -14,7 +14,7 @@ NAME = so_long
 
 CC = gcc
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -g3 #-Wall -Wextra -Werror
 
 SRC = src/main.c src/parsing/print_error.c src/parsing/parse_map.c \
 	src/get_next_line/get_next_line.c src/get_next_line/get_next_line_utils.c \

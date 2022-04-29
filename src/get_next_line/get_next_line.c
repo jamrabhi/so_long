@@ -21,17 +21,19 @@ static void	free_array(char **str)
 	}
 }
 
-static int	free_exit(char **str)
+static int	free_exit(char **str, int errcode)
 {
 	if (str)
 	{
 		free(*str);
 		*str = NULL;
 	}
+	if (errcode == 1)
+		write(STDERR_FILENO, "Error\nInvalid map\n", 18);
 	return (-1);
 }
 
-int	check_special_char(char *line, char **str, int fd)
+static int	check_special_char(char *line, char **str, int fd)
 {
 	int	i;
 
@@ -40,10 +42,8 @@ int	check_special_char(char *line, char **str, int fd)
 	{
 		if (line[i] <= 0)
 		{
-			free_array(&str[fd]);
 			free(line);
-			write(STDERR_FILENO, "Error\nInvalid map\n", 18);
-			return (-2);
+			return (-1);
 		}
 		i++;
 	}
@@ -59,8 +59,8 @@ static int	separate_lines(char **line, char **str, int fd)
 	while (str[fd][i] && str[fd][i] != '\n')
 		i++;
 	*line = ft_substr(str[fd], 0, i);
-	if (check_special_char(*line, str, fd) == -2)
-		return (-2);
+	if (check_special_char(*line, str, fd) == -1)
+		return (free_exit(&str[fd], 1));
 	if (!line)
 	{
 		free_array(&str[fd]);
@@ -70,7 +70,7 @@ static int	separate_lines(char **line, char **str, int fd)
 	{
 		rest = ft_substr(str[fd], i + 1, ft_strlen(str[fd]) - (i + 1));
 		if (!rest)
-			free_exit(&str[fd]);
+			return (free_exit(&str[fd], 0));
 		free_array(&str[fd]);
 		str[fd] = rest;
 		return (1);
@@ -86,22 +86,22 @@ int	get_next_line(int fd, char **line)
 	int			i;
 	char		*tmp;
 
-	if (fd < 0 || fd >= OPEN_MAX || !line || BUFFER_SIZE <= 0
-		|| read(fd, buf, 0) < 0)
-		return (-1);
 	if (!str[fd])
 		str[fd] = (char *)ft_memalloc(sizeof(char) * 1);
-	if (!str[fd])
+	if (fd < 0 || fd >= OPEN_MAX || !line || BUFFER_SIZE <= 0
+		|| read(fd, buf, 0) < 0 || !str[fd])
 		return (-1);
 	while (!ft_strchr(str[fd], '\n'))
 	{
 		i = read(fd, buf, BUFFER_SIZE);
 		if (i <= 0)
 			break ;
+		if (buf[0] == 0)
+			return (free_exit(&str[fd], 1));
 		buf[i] = '\0';
 		tmp = ft_strjoin(str[fd], buf);
 		if (!tmp)
-			free_exit(&str[fd]);
+			return (free_exit(&str[fd], 0));
 		free_array(&str[fd]);
 		str[fd] = tmp;
 	}

@@ -24,7 +24,7 @@ char	*get_array(char *line, t_data *data)
 	while (ret)
 	{
 		ret = get_next_line(data->fd, &line);
-		if (ret == -2)
+		if (ret < 0)
 		{
 			free(str);
 			exit(EXIT_FAILURE);

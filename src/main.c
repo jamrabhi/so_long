@@ -12,6 +12,24 @@
 
 #include <so_long.h>
 
+void	show_array(char **str)
+{
+	int i = 0;
+	int j = 0;
+
+	while (str[i])
+	{
+		j = 0;
+		while(str[i][j])
+		{
+			printf("%c", str[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -25,7 +43,8 @@ int	main(int argc, char **argv)
 	data.fd = open(argv[1], O_RDONLY);
 	if (data.fd == -1)
 		print_error("File doesn't exist\n");
-	parse_map(argv[1], &data);
+	data.map = parse_map(argv[1], &data);
+	show_array(data.map);
 	//DEBUG
 	printf("\ndata->fd = %d\n", data.fd);
 	printf("data->width = %ld\n", data.width);
@@ -35,6 +54,7 @@ int	main(int argc, char **argv)
 	printf("data->player_start = %d\n\n", data.player_start);
 	printf("OK !\n");
 	//END DEBUG
-	display();
+	display(&data);
+	free_array(data.map);
 	return (0);
 }

@@ -51,7 +51,7 @@ void	check_ber(char *file_name)
 		print_error("Incorrect file format\n");
 }
 
-void	parse_map(char *file_ber, t_data *data)
+char	**parse_map(char *file_ber, t_data *data)
 {
 	char	*map_str;
 	char	**map_array;
@@ -67,5 +67,5 @@ void	parse_map(char *file_ber, t_data *data)
 		print_error("Invalid map\n");
 	}
 	free(map_str);
-	free_array(map_array);
+	return (map_array);
 }

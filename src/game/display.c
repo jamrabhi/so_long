@@ -20,25 +20,62 @@ void	my_mlx_pixel_put(t_mlx_data *mlx_data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-
-void	display()
+void	display_textures(t_data *data, t_mlx_data *mlx_data)
 {
-	void		*mlx;
-	void		*mlx_win;
+	int i;
+	int j;
+	int width;
+	int height;
+	void *img_ptr;
+
+	i = -1;
+	while (data->map[++i])
+	{
+		j = -1;
+		while (data->map[i][++j])
+		{
+			if(data->map[i][j] == '1')
+				img_ptr = mlx_xpm_file_to_image(mlx_data->mlx_ptr, "./textures/wall.XPM", &width, &height);
+			else if (data->map[i][j] == '0')
+				img_ptr = mlx_xpm_file_to_image(mlx_data->mlx_ptr, "./textures/empty.XPM", &width, &height);
+			else if (data->map[i][j] == 'E')
+				img_ptr = mlx_xpm_file_to_image(mlx_data->mlx_ptr, "./textures/empty.XPM", &width, &height);
+			else if (data->map[i][j] == 'P')
+				img_ptr = mlx_xpm_file_to_image(mlx_data->mlx_ptr, "./textures/player.XPM", &width, &height);
+			else if (data->map[i][j] == 'C')
+				img_ptr = mlx_xpm_file_to_image(mlx_data->mlx_ptr, "./textures/collectible.XPM", &width, &height);
+			mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr, img_ptr, j * 50, i * 50);
+		}
+	}
+}
+
+int	key_hook(int keycode, t_mlx_data *mlx_data)
+{
+	// if (keycode == UP_KEY)
+	printf("%d\n", keycode);
+	return (0);
+}
+
+int	close_window(int keycode, t_mlx_data *mlx_data)
+{
+	mlx_destroy_window(mlx_data->mlx_ptr, mlx_data->win_ptr);
+	exit(EXIT_SUCCESS);	
+	return (0);
+}
+
+
+void	display(t_data *data)
+{
 	t_mlx_data	mlx_data;
 
 	ft_bzero(&mlx_data, sizeof(mlx_data));
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 200, 400, "so_long");
-	mlx_data.img = mlx_new_image(mlx, 200, 400);
+	mlx_data.mlx_ptr = mlx_init();
+	mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, data->width *50, data->height * 50, "so_long");
+	mlx_data.img = mlx_new_image(mlx_data.mlx_ptr, data->width *50, data->width *50);
 	mlx_data.addr = mlx_get_data_addr(mlx_data.img, &mlx_data.bits_per_pixel,
 		&mlx_data.line_length, &mlx_data.endian);
-	mlx_pixel_put(mlx, mlx_win, 5, 5, 0x00FF0000);
-	// my_mlx_pixel_put(&mlx_data, 5, 5, 0x00FF0000);
-	// my_mlx_pixel_put(&mlx_data, 6, 5, 0x00FF0000);
-	// my_mlx_pixel_put(&mlx_data, 7, 5, 0x00FF0000);
-	// my_mlx_pixel_put(&mlx_data, 8, 5, 0x00FF0000);
-	// my_mlx_pixel_put(&mlx_data, 9, 5, 0x00FF0000);
-	// mlx_put_image_to_window(mlx, mlx_win, mlx_data.img, 2, 2);
-	mlx_loop(mlx);
+	display_textures(data, &mlx_data);
+	mlx_hook(mlx_data.win_ptr, 2, 1L<<0, key_hook, &mlx_data);
+	mlx_hook(mlx_data.win_ptr, 17, 1L<<17, close_window, &mlx_data);
+	mlx_loop(mlx_data.mlx_ptr);
 }

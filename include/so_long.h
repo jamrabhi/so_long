@@ -31,10 +31,13 @@ typedef struct s_data
 	int		collectible;
 	int		map_exit;
 	int		player_start;
+	char	**map;
 
 }				t_data;
 
 typedef struct	s_mlx_data {
+	void	*mlx_ptr;
+	void	*win_ptr;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -42,14 +45,23 @@ typedef struct	s_mlx_data {
 	int		endian;
 }				t_mlx_data;
 
+enum	e_keycode
+{
+	UP_KEY = 119,
+	DOWN_KEY = 115,
+	LEFT_KEY = 97,
+	RIGHT_KEY = 100,
+	ESC_KEY = 65307
+};
+
 int		print_error(char *error);
-void	parse_map(char *line, t_data *data);
+char	**parse_map(char *line, t_data *data);
 void	check_ber(char *file_name);
 void	free_array(char **str);
 int		check_first_last_line(char **map);
 int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
 int		check_valid_char(char **map, t_data *data);
-void	display();
+void	display(t_data *data);
 
 #endif

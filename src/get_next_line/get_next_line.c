@@ -33,7 +33,7 @@ static int	free_exit(char **str, int errcode)
 	return (-1);
 }
 
-static int	check_special_char(char *line, char **str, int fd)
+static int	check_special_char(char *line)
 {
 	int	i;
 
@@ -59,7 +59,7 @@ static int	separate_lines(char **line, char **str, int fd)
 	while (str[fd][i] && str[fd][i] != '\n')
 		i++;
 	*line = ft_substr(str[fd], 0, i);
-	if (check_special_char(*line, str, fd) == -1)
+	if (check_special_char(*line) == -1)
 		return (free_exit(&str[fd], 1));
 	if (!line)
 	{

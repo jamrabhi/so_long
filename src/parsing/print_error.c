@@ -12,13 +12,6 @@
 
 #include <so_long.h>
 
-int	print_error(char *error)
-{
-	ft_putstr_fd("Error\n", STDERR_FILENO);
-	ft_putstr_fd(error, STDERR_FILENO);
-	exit (EXIT_FAILURE);
-}
-
 void	free_array(char **str)
 {
 	int	i;
@@ -32,4 +25,22 @@ void	free_array(char **str)
 	*str = NULL;
 	if (str)
 		free(str);
+}
+
+int	print_error(char *error)
+{
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
+
+int	print_error_free(t_data *data, char *error)
+{
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	if (data->map)
+		free_array(data->map);
+	if (data->mlx_ptr)
+		free(data->mlx_ptr);
+	exit(EXIT_FAILURE);
 }

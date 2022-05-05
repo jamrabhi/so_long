@@ -55,6 +55,5 @@ int	main(int argc, char **argv)
 	printf("OK !\n");
 	//END DEBUG
 	display(&data);
-	free_array(data.map);
 	return (0);
 }

@@ -21,7 +21,13 @@ void	check_collectible(t_data *data, int x, int y)
 void	check_exit(t_data *data, int x, int y)
 {
 	if (data->map[y][x] == EXIT && data->collectible == 0)
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->player_img, x * 50, y * 50);
+		ft_putnbr_fd(++data->move_count, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		close_window(data);
+	}
 }
 
 void	move_player(t_data *data, int to_x, int to_y)
@@ -41,8 +47,8 @@ void	move_player(t_data *data, int to_x, int to_y)
 				data->player_img, to_x * 50, to_y * 50);
 			data->player_pos_x = to_x;
 			data->player_pos_y = to_y;
-			ft_putnbr_fd(++data->move_count, 1);
-			ft_putstr_fd("\n", 1);
+			ft_putnbr_fd(++data->move_count, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 	}
 }

@@ -52,7 +52,7 @@ int	check_rectangle(char **map, t_data *data)
 			return (1);
 		height++;
 	}
-	if (height == width || height == 1)
+	if (height == 1)
 		return (1);
 	data->width = width;
 	data->height = height;

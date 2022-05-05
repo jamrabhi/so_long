@@ -28,7 +28,7 @@ LIBDIR = libft/
 
 LIB = libft/libft.a
 
-MLXDIR = minilibx-linux
+MLXDIR = minilibx-linux/
 
 MLXFLAGS = -lmlx -lXext -lX11
 
@@ -39,6 +39,10 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	@echo "Compiling Libft ..."
 	@cd $(LIBDIR) && make
+	@echo "DONE \n"
+
+	@echo "Configuring MiniLibX ..."
+	@cd $(MLXDIR) && ./configure > /dev/null 2>&1
 	@echo "DONE \n"
 
 	@echo "Compiling So Long ..."
@@ -58,6 +62,12 @@ clean:
 	@echo "DONE"
 
 fclean: clean
+
+ifneq ("$(shell ls $(MLXDIR)libmlx_Linux.a 2>/dev/null)","")
+	@echo "Executing the clean rule of MiniLibX ..."
+	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
+	@echo "DONE \n"
+endif
 
 	@echo "Deleting Libft's binary ..."
 	@cd $(LIBDIR) && make $@

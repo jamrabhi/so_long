@@ -63,11 +63,25 @@ void	load_images(t_data *data)
 	data->player_img = mlx_xpm_file_to_image(data->mlx_ptr,
 			"./textures/player.XPM", &width, &height);
 	data->collect_img = mlx_xpm_file_to_image(data->mlx_ptr,
-			"./textures/collectible.XPM", &width, &height);
+			"./textures/collectible.XM", &width, &height);
 	if (data->wall_img == 0 || data->empty_img == 0 || data
 		->exit_img == 0 || data->player_img == 0 || data->collect_img
 		== 0)
-		exit(EXIT_FAILURE);
+		{
+			if (data->wall_img)
+				mlx_destroy_image(data->mlx_ptr, data->wall_img);
+			if (data->empty_img)
+				mlx_destroy_image(data->mlx_ptr, data->empty_img);
+			if (data->exit_img)
+				mlx_destroy_image(data->mlx_ptr, data->exit_img);
+			if(data->player_img)
+				mlx_destroy_image(data->mlx_ptr, data->player_img);
+			if(data->collect_img)
+				mlx_destroy_image(data->mlx_ptr, data->collect_img);
+			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+			mlx_destroy_display(data->mlx_ptr);
+		print_error_free(data, "Failed to load texture (mlx_xpm_file_to_image");
+		}
 }
 
 int	close_window(t_data *data)

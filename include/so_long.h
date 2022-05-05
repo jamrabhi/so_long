@@ -34,35 +34,14 @@ typedef struct s_data
 	char	**map;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*img;
 	void	*wall_img;
 	void	*empty_img;
 	void	*exit_img;
 	void	*player_img;
 	void	*collect_img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int 	move_count;
+	int		move_count;
 
 }				t_data;
-
-// typedef struct	s_mlx_data {
-// 	char	**map;
-// 	void	*mlx_ptr;
-// 	void	*win_ptr;
-// 	void	*img;
-// 	void	*wall_img;
-// 	void	*empty_img;
-// 	void	*exit_img;
-// 	void	*player_img;
-// 	void	*collect_img;
-// 	char	*addr;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// }				t_mlx_data;
 
 enum	e_texture
 {

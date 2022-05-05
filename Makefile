@@ -63,11 +63,9 @@ clean:
 
 fclean: clean
 
-ifneq ("$(shell ls $(MLXDIR)libmlx_Linux.a 2>/dev/null)","")
 	@echo "\nExecuting the clean rule of MiniLibX ..."
 	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
 	@echo "DONE \n"
-endif
 
 	@echo "Deleting Libft's binary ..."
 	@cd $(LIBDIR) && make $@

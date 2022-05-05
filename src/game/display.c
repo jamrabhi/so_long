@@ -71,7 +71,7 @@ void	load_images(t_data *data)
 	if (data->wall_img == 0 || data->empty_img == 0 || data
 		->exit_img == 0 || data->player_img == 0 || data->collect_img
 		== 0)
-		print_error_free(data, "Failed to load texture\n");
+		print_error_free(data, "Failed to load textures\n");
 }
 
 int	key_hook(int keycode, t_data *data)

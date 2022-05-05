@@ -61,20 +61,18 @@ enum	e_keycode
 	ESC_KEY = 65307
 };
 
-void	free_array(char **str);
 int		print_error(char *error);
 char	**parse_map(char *line, t_data *data);
 void	check_ber(char *file_name);
-int		check_first_last_line(char **map);
 int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
 int		check_valid_char(char **map, t_data *data);
+void	free_array(char **str);
 void	display(t_data *data);
-void	free_all(t_data *data);
 void	print_error_free(t_data *data, char *error);
+void	free_all(t_data *data);
 int		close_window(t_data *data);
-void	display_textures(t_data *data);
 void	move_player(t_data *data, int to_x, int to_y);
-
+void	display_textures(t_data *data);
 
 #endif

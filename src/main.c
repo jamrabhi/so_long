@@ -26,6 +26,8 @@ int	main(int argc, char **argv)
 	if (data.fd == -1)
 		print_error("File doesn't exist\n");
 	data.map = parse_map(argv[1], &data);
+	if (!data.map[0])
+		print_error("Couldn't store map\n");
 	display(&data);
 	return (0);
 }

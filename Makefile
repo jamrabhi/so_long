@@ -14,11 +14,11 @@ NAME = so_long
 
 CC = gcc
 
-CFLAGS = -g3 #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-SRC = src/main.c src/parsing/print_error.c src/parsing/parse_map.c \
+SRC = src/main.c src/parsing/exit.c src/parsing/parse_map.c \
 	src/get_next_line/get_next_line.c src/get_next_line/get_next_line_utils.c \
-	src/parsing/parse_map_utils.c src/game/display.c
+	src/parsing/parse_map_utils.c src/game/display.c src/game/move_player.c
 
 OBJ = $(SRC:.c=.o)
 

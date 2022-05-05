@@ -17,11 +17,9 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include "../src/get_next_line/get_next_line.h"
 # include <mlx.h>
-
-//A SUPPRIMER !!!!
-# include <stdio.h>
 
 typedef struct s_data
 {
@@ -31,6 +29,8 @@ typedef struct s_data
 	int		collectible;
 	int		map_exit;
 	int		player_start;
+	int		player_pos_x;
+	int		player_pos_y;
 	char	**map;
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -44,6 +44,7 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int 	move_count;
 
 }				t_data;
 
@@ -83,7 +84,6 @@ enum	e_keycode
 
 void	free_array(char **str);
 int		print_error(char *error);
-int		print_error_free(t_data *data, char *error);
 char	**parse_map(char *line, t_data *data);
 void	check_ber(char *file_name);
 int		check_first_last_line(char **map);
@@ -91,5 +91,11 @@ int		check_rectangle(char **map, t_data *data);
 int		check_borders(char **map, t_data *data);
 int		check_valid_char(char **map, t_data *data);
 void	display(t_data *data);
+void	free_all(t_data *data);
+void	print_error_free(t_data *data, char *error);
+int		close_window(t_data *data);
+void	display_textures(t_data *data);
+void	move_player(t_data *data, int to_x, int to_y);
+
 
 #endif

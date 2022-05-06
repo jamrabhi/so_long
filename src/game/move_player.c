@@ -12,6 +12,25 @@
 
 #include <so_long.h>
 
+int	render(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			draw(data, data->map[y][x], x, y);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
 void	check_collectible(t_data *data, int x, int y)
 {
 	if (data->map[y][x] == COLLECT)
@@ -22,8 +41,9 @@ void	check_exit(t_data *data, int x, int y)
 {
 	if (data->map[y][x] == EXIT && data->collectible == 0)
 	{
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->player_img, x * 50, y * 50);
+		data->map[y][x] = PLAYER;
+		data->player_pos_x = x;
+		data->player_pos_y = y;
 		ft_putnbr_fd(++data->move_count, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		close_window(data);
@@ -39,12 +59,7 @@ void	move_player(t_data *data, int to_x, int to_y)
 		if (data->map[to_y][to_x] != EXIT)
 		{
 			data->map[data->player_pos_y][data->player_pos_x] = EMPTY;
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->empty_img, data->player_pos_x * 50,
-				data->player_pos_y * 50);
 			data->map[to_y][to_x] = PLAYER;
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->player_img, to_x * 50, to_y * 50);
 			data->player_pos_x = to_x;
 			data->player_pos_y = to_y;
 			ft_putnbr_fd(++data->move_count, STDOUT_FILENO);

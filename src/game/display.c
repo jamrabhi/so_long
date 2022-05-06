@@ -102,6 +102,5 @@ void	display(t_data *data)
 	display_textures(data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key_hook, data);
 	mlx_hook(data->win_ptr, 17, 1L << 17, close_window, data);
-	mlx_loop_hook(data->mlx_ptr, render, data);
 	mlx_loop(data->mlx_ptr);
 }

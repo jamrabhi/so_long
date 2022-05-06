@@ -74,6 +74,7 @@ void	free_all(t_data *data);
 int		close_window(t_data *data);
 void	move_player(t_data *data, int to_x, int to_y);
 void	display_textures(t_data *data);
+void	draw(t_data *data, int texture, int x, int y);
 int		render(t_data *data);
 
 #endif

@@ -91,9 +91,15 @@ int	key_hook(int keycode, t_data *data)
 
 void	display(t_data *data)
 {
+	int	sizex;
+	int	sizey;
+
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		print_error_free(data, "Failed to init mlx\n");
+	mlx_get_screen_size(data->mlx_ptr, &sizex, &sizey);
+	if (sizex < (int)(data->width * 50) || sizey < (int)(data->height * 50))
+		print_error_free(data, "Map is bigger than the screen\n");
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->width * 50,
 			data->height * 50, "so_long");
 	if (!data->win_ptr)

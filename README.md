@@ -2,5 +2,6 @@
 
 **Usage :**
 ```bash
-make && ./so_long maps/map.ber
+$> make
+$> ./so_long maps/map.ber
 ```

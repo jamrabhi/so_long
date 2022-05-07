@@ -4,5 +4,7 @@
 **Usage :**
 ```bash
 $> make
+```
+```bash
 $> ./so_long maps/map.ber
 ```
